@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   string_builder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anzongan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/01 14:57:03 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/01 16:34:43 by anzongan         ###   ########.fr       */
+/*   Created: 2025/11/01 16:15:30 by anzongan          #+#    #+#             */
+/*   Updated: 2025/11/01 16:56:57 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_print.h"
 
-int	ft_printf(const char *format, ...)
+int	string_builder(const char *format, char **res, va_list ap)
 {
-	va_list		ap;
-	unsigned int	bytes_read;
-	char 			*result;
+	int	i;
+	char	*subchar;
 
-	va_start(ap);
-	while (*format)
+	i = 0;
+	while (format[i] && format[i] != '%')
 	{
-		bytes_read += string_builder(&result, format, ap);
-		if (bytes_read < 0)
-			return (-1);
-		format += bytes_read;
+		if (format[i] == '%')
+			//call a general handle
+		len = 0;
+		while (format[i] && format[i] != '%')
+			len++;
+		subchar = ft_substr(format + i);;
+		*res = ft_strjoin();
+		i++;
 	}
-	ft_putstr(result);
-	return bytes_read;
 }
