@@ -6,7 +6,7 @@
 /*   By: anzongan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 16:15:30 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/04 23:47:49 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/05 16:35:51 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,60 @@ int	valid_chars(const char *str)
 	return (i);
 }
 
-int	handle_specifier(const char *str, char **res, va_list *ap)
+int	wp_builder(const char *str, va_list *ap)
+{
+	int	i;
+	int	w;
+	int	p;
+	width_precision	*wp;
+
+	i = 0;
+	w = 0;
+	p = 0;
+	while (str[i] && ft_strchr("0#-+ ", str[i]))
+		i++;
+	if (str[i] == '*')
+		w = va_arg(*ap, int);
+	i = 0;
+	while (str[i] && ft_strchr("0#-+ *0123456789", str[i]))
+		i++;
+	if (str[i] == '.' && str[i + 1] == '*')
+		p = va_arg(*ap, int);
+	wp = (width_precision *)malloc(sizeof(width_precision));
+	if (!wp)
+		return (NULL);
+	wp->width = w;
+	wp->precision = p;
+	return (wp);
+}
+
+int	handle_specifier(const char *str, char *sp, char **res, va_list *ap)
+{
+	width_precision	*wp;
+
+	wp = wp_builder(str, ap);
+	if (!sp)
+		return (1);
+	if (*sp == '%')
+		handle_percent(str, res);
+	if (*sp == 'i' || *sp == 'd')
+		handle_integer(str, res, va_arg(*ap, int), wp);
+	if (*sp == 'u')
+		handle_unsigned_int(str, res, va_arg(*ap, unsigned int), wp);
+	if (*sp == 'x')
+		handle_lowhex(str, res, va_arg(*ap, unsigned int), wp);
+	if (*sp == 'X')
+		handle_uphex(str, res, va_arg(*ap, unsigned int), wp);
+	if (*sp == 'p')
+		handle_pointer(str, res, va_arg(*ap, void *), wp);
+	if (*sp == 'c')
+		handle_char(str, res, va_arg(*ap, int), wp);
+	if (*sp == 's')
+		handle_string(str, res, va_arg(*ap, char *), wp);
+	return (sp - str);
+}
+
+int	handle_format(const char *str, char **res, va_list *ap)
 {
 	char	*sp;
 	int	star_width;
@@ -88,25 +141,7 @@ int	handle_specifier(const char *str, char **res, va_list *ap)
 	if (valid_chars(str) < 0 || valid_order(str) < 0)
 		return (1);//go to the next char
 	sp = first_specifier(str);
-	if (!sp)
-		return (1);
-	if (*sp == '%')
-		handle_percent(str, res);
-	else if (*sp == 'i' || *sp == 'd')
-		handle_integer(str, res, star_width, va_arg(*ap, int));
-	else if (*sp == 'u')
-		handle_unsigned(str, res, va_arg(*ap, unsigned int));
-	else if (*sp == 'p')
-		handle_pointer(str, res, va_arg(*ap, void *));
-	else if (*sp == 'x')
-		handle_lowhex(str, res, va_arg(*ap, unsigned int));
-	else if (*sp == 'X')
-		handle_uphex(str, res, va_arg(*ap, unsigned int));
-	else if (*sp == 's')
-		handle_string(str, res, va_arg(*ap, char *));
-	else if (*sp == 'c')
-		handle_char(str, res, va_arg(*ap, int));
-	return (sp - str);
+	return (handle_specifiers(str, sp, res, ap));
 }
 
 int	char_sequence(unsigned int len, const char *str, char **res)
@@ -114,7 +149,7 @@ int	char_sequence(unsigned int len, const char *str, char **res)
 	int		i;
 	int		j;
 	char	*tmp;
-	
+
 	if (!res || !str)
 		return (NULL);
 	tmp = (char *)malloc(ft_strlen(*res) + len + 1);
@@ -148,7 +183,7 @@ int	string_builder(const char *format, char **res, va_list *ap)
 	while (format[i])
 	{
 		if (format[i] == '%')
-			covered = handle_specifier(&format[i], res, ap);
+			covered = handle_format(&format[i], res, ap);
 		else
 		{
 			while (format[i] && format[i] != '%')
