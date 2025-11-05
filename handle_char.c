@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   handle_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/01 14:57:03 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/04 21:49:57 by anzongan         ###   ########.fr       */
+/*   Created: 2025/11/04 22:09:14 by anzongan          #+#    #+#             */
+/*   Updated: 2025/11/04 22:25:13 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *format, ...)
+void	handle_char(char *str, char **res, )
 {
-	va_list		ap;
-	unsigned int	bytes_read;
-	char 			*result;
 
-	va_start(ap, format);
-	bytes_read = string_builder(format, &result, ap);
-	if (bytes_read < 0)
-		return (-1);
-	ft_putstr(result);
-	return (bytes_read);
 }
