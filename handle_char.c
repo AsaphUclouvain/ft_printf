@@ -6,7 +6,7 @@
 /*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 22:09:14 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/05 17:22:07 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/06 23:25:58 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static int	extract_width(const char *str)
 	}
 	num[len] = '\0';
 	val = ft_atoi(num);
+	free(num);
 	return (val);
 }
 
@@ -74,6 +75,7 @@ static void	add_char(char **res, int c, int rep)
 		j++;
 	}
 	tmp[i + j] = '\0';
+	res = tmp;
 }
 
 void	handle_char(char *str, char **res, int c, t_width_precision* wp)
@@ -86,7 +88,7 @@ void	handle_char(char *str, char **res, int c, t_width_precision* wp)
 		w = wp->width;
 	free(wp);
 	if (w <= 1)
-		add_char(res, c, w);
+		add_char(res, c, 1);
 	else
 	{
 		if (left_alignment(str))

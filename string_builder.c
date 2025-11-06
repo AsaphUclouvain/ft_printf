@@ -6,7 +6,7 @@
 /*   By: anzongan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 16:15:30 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/05 16:35:51 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/06 23:35:29 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	wp_builder(const char *str, va_list *ap)
 	if (str[i] == '*')
 		w = va_arg(*ap, int);
 	i = 0;
-	while (str[i] && ft_strchr("0#-+ *0123456789", str[i]))
+	while (str[i] && ft_strchr("0#-+ *123456789", str[i]))
 		i++;
 	if (str[i] == '.' && str[i + 1] == '*')
 		p = va_arg(*ap, int);
