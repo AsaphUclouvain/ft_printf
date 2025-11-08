@@ -6,7 +6,7 @@
 /*   By: anzongan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 16:15:30 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/06 23:35:29 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:58:07 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	wp_builder(const char *str, va_list *ap)
 
 	i = 0;
 	w = 0;
-	p = 0;
+	p = -1;//pas de precision precisee
 	while (str[i] && ft_strchr("0#-+ ", str[i]))
 		i++;
 	if (str[i] == '*')
@@ -106,27 +106,29 @@ int	wp_builder(const char *str, va_list *ap)
 
 int	handle_specifier(const char *str, char *sp, char **res, va_list *ap)
 {
-	width_precision	*wp;
+	t_attributes	*atr;
 
-	wp = wp_builder(str, ap);
+	atr = set_attributes(str, wp_builder(str, ap));
+	if (!atr)
+		return (-1);
 	if (!sp)
 		return (1);
-	if (*sp == '%')
+	else if (*sp == '%')
 		handle_percent(str, res);
-	if (*sp == 'i' || *sp == 'd')
-		handle_integer(str, res, va_arg(*ap, int), wp);
-	if (*sp == 'u')
-		handle_unsigned_int(str, res, va_arg(*ap, unsigned int), wp);
-	if (*sp == 'x')
-		handle_lowhex(str, res, va_arg(*ap, unsigned int), wp);
-	if (*sp == 'X')
-		handle_uphex(str, res, va_arg(*ap, unsigned int), wp);
-	if (*sp == 'p')
-		handle_pointer(str, res, va_arg(*ap, void *), wp);
-	if (*sp == 'c')
-		handle_char(str, res, va_arg(*ap, int), wp);
-	if (*sp == 's')
-		handle_string(str, res, va_arg(*ap, char *), wp);
+	else if (*sp == 'i' || *sp == 'd')
+		handle_integer(str, res, va_arg(*ap, int), atr);
+	else if (*sp == 'u')
+		handle_unsigned_int(str, res, va_arg(*ap, unsigned int), atr);
+	else if (*sp == 'x')
+		handle_lowhex(str, res, va_arg(*ap, unsigned int), atr);
+	else if (*sp == 'X')
+		handle_uphex(str, res, va_arg(*ap, unsigned int), atr);
+	else if (*sp == 'p')
+		handle_pointer(str, res, va_arg(*ap, void *), atr);
+	else if (*sp == 'c')
+		handle_char(str, res, va_arg(*ap, int), atr);
+	else if (*sp == 's')
+		handle_string(str, res, va_arg(*ap, char *), atr);
 	return (sp - str);
 }
 
@@ -139,7 +141,7 @@ int	handle_format(const char *str, char **res, va_list *ap)
 	if (!str || !res || !ap)
 		return (-1);
 	if (valid_chars(str) < 0 || valid_order(str) < 0)
-		return (1);//go to the next char
+		return (1);//go to the next char in the caller function
 	sp = first_specifier(str);
 	return (handle_specifiers(str, sp, res, ap));
 }
@@ -151,7 +153,7 @@ int	char_sequence(unsigned int len, const char *str, char **res)
 	char	*tmp;
 
 	if (!res || !str)
-		return (NULL);
+		return (-1);
 	tmp = (char *)malloc(ft_strlen(*res) + len + 1);
 	if (!tmp)
 		return (-1);

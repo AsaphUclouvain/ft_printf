@@ -6,7 +6,7 @@
 /*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 23:40:20 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/07 00:22:10 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/08 00:05:39 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	width(const char *str)
 	return (val);
 }
 
-int	left_aligment(const char *str)
+int	left_align(const char *str)
 {
 	int	i;
 
@@ -51,8 +51,10 @@ int	precision(const char *str)
 	char	*num;
 
 	i = 0;
-	while (str[i] && ft_strchr("0#+- 123456789.", str[i]))
+	while (str[i] && ft_strchr("0#+- 123456789", str[i]))
 		i++;
+	if (str[i++] != '.')
+		return (-1);
 	len = 0;
 	while (str[i + len] && ft_isdigit(str[i + len]))
 		len++;
@@ -74,7 +76,7 @@ int	hashtag(const char *str)
 	return (str[i] == '#');
 }
 
-int	extract_sign(const char *str)
+int	sign(const char *str)
 {
 	int	i;
 
@@ -84,7 +86,7 @@ int	extract_sign(const char *str)
 	return (str[i] == '+');
 }
 
-int	extract_space(const char *str)
+int	space(const char *str)
 {
 	int	i;
 
