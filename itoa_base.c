@@ -6,13 +6,13 @@
 /*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 13:21:24 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/08 16:27:58 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/11 16:23:53 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	valid_base(const char *base)
+static int	valid_base(const char *base)
 {
 	int	i;
 	int	j;
@@ -36,7 +36,7 @@ int	valid_base(const char *base)
 	return (1);
 }
 
-int	num_len(unsigned long long num, int base_len)
+static int	num_len(unsigned long long num, int base_len)
 {
 	int	len;
 
@@ -49,7 +49,7 @@ int	num_len(unsigned long long num, int base_len)
 	return (len);
 }
 
-void	str_reverse(char *str)
+static void	str_reverse(char *str)
 {
 	int		right;
 	int		left;
@@ -67,7 +67,7 @@ void	str_reverse(char *str)
 	}
 }
 
-char	*itoa_base(unsigned long long num, int base_len, const char *base)
+char	*ft_itoa_base(unsigned long long num, int base_len, const char *base)
 {
 	char	*str_num;
 	int		len;
@@ -89,30 +89,4 @@ char	*itoa_base(unsigned long long num, int base_len, const char *base)
 	str_num[i] = '\0';
 	str_reverse(str_num);
 	return (str_num);
-}
-
-void	generic_converter(int negative, char type, char *str_num, t_attributes *atr)
-{
-	if (atr->precision > ft_strlen(str_num))
-		apply_precision(atr->precision, &str_num);
-	if (atr->plus || negative)
-	{
-		if (negative)
-			add_prefix("-", &str_num);
-		else
-			add_prefix("+", &str_num);
-	}
-	if (atr->space)
-		add_prefix(" ", &str_num);
-	if (atr->hashtag || type == 'p')
-	{
-		if (type == 'X')
-			add_prefix("0X", &str_num);
-		else
-			add_prefix("0x", &str_num);
-	}
-	if (atr->zero_padding && atr->width > ft_strlen(str_num))
-		apply_zero_padding(atr->width, &str_num);
-	if (atr->width > ft_strlen(str_num))
-		apply_width(atr->left_align, &str_num);
 }

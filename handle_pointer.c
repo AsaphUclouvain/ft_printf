@@ -1,24 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_unsigned_int.c                              :+:      :+:    :+:   */
+/*   handle_pointer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/04 22:03:30 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/13 23:47:06 by anzongan         ###   ########.fr       */
+/*   Created: 2025/11/11 14:49:25 by anzongan          #+#    #+#             */
+/*   Updated: 2025/11/14 00:17:25 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	handle_unsigned_int(char **res, unsigned int value, t_attributes *atr)
+static char	*ft_nil()
+{
+	char	*nil;
+	int	len;
+
+	len = 5;
+	nil = (char *)malloc(len + 1);
+	if (!nil)
+		return (NULL);
+	ft_memcpy(nil, "(nil)", len);
+	nil[len] = '\0';
+	return (nil);
+}
+
+void	handle_pointer(char **res, unsigned long ptr, t_attributes *atr)
 {
 	char	*s;
 
-	attributes_annulation(0, value, 'u', atr);
-	s = ft_itoa_base(value, 10, "0123456789");
-	generic_converter(0, 'u', &s, atr);
+	attributes_annulation(0, ptr, 'p', atr);
+	if (ptr == 0)
+		s = ft_nil();
+	else
+	{
+		s = ft_itoa_base(ptr, 16, "0123456789abcdef");
+		generic_converter(0, 'p', &s, atr);
+	}
+	if (!s)
+		return ;
 	add_str(s, res);
 	free(s);
 }

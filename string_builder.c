@@ -6,103 +6,11 @@
 /*   By: anzongan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 16:15:30 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/08 12:58:07 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/14 03:12:38 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_print.h"
-
-
-int	isspecifier(char c)
-{
-	return (ft_strchr("cspdiuxX%", c) != NULL);
-}
-
-char	*first_specifier(const char *str)
-{
-	int	i;
-
-	i  = 0;
-	while (str[i])
-	{
-		if (isspecifier(str[i]))
-			return ((char *)s + i);
-		i++;
-	}
-	return (NULL);
-}
-
-int	valid_order(const char *str)
-{
-	int	i;
-	int	either;
-
-	i = 0;
-	while (str[i] && ft_strchr("0# -+", str[i]))
-		i++;
-	either = i;
-	while (str[i] && ft_isdigit(str[i]))
-		i++;
-	if (str[i] == '*' &&  either == i)
-		i++;
-	if (str[i] == '.')
-	{
-		i++;
-		either = i;
-		while (str[i] && ft_isdigit(str[i]))
-			i++;
-		if (str[i] == '*' && either == i)
-			i++;
-	}
-	if (!str[i])
-		return (-1);
-	if (!isspecifier(str[i]))
-		return (-1);
-	return (i);
-}
-
-int	valid_chars(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && !isspecifier(str[i]))
-	{
-		if (!ft_strchr("0123456789# -+.*", str[i]))
-			return (-1);
-		i++;
-	}
-	if (!str[i])
-		return (-1);
-	return (i);
-}
-
-int	wp_builder(const char *str, va_list *ap)
-{
-	int	i;
-	int	w;
-	int	p;
-	width_precision	*wp;
-
-	i = 0;
-	w = 0;
-	p = -1;//pas de precision precisee
-	while (str[i] && ft_strchr("0#-+ ", str[i]))
-		i++;
-	if (str[i] == '*')
-		w = va_arg(*ap, int);
-	i = 0;
-	while (str[i] && ft_strchr("0#-+ *123456789", str[i]))
-		i++;
-	if (str[i] == '.' && str[i + 1] == '*')
-		p = va_arg(*ap, int);
-	wp = (width_precision *)malloc(sizeof(width_precision));
-	if (!wp)
-		return (NULL);
-	wp->width = w;
-	wp->precision = p;
-	return (wp);
-}
+#include "ft_printf.h"
 
 int	handle_specifier(const char *str, char *sp, char **res, va_list *ap)
 {
@@ -114,22 +22,22 @@ int	handle_specifier(const char *str, char *sp, char **res, va_list *ap)
 	if (!sp)
 		return (1);
 	else if (*sp == '%')
-		handle_percent(str, res);
+		handle_percent(res);
 	else if (*sp == 'i' || *sp == 'd')
-		handle_integer(str, res, va_arg(*ap, int), atr);
+		handle_integer(res, va_arg(*ap, int), atr);
 	else if (*sp == 'u')
-		handle_unsigned_int(str, res, va_arg(*ap, unsigned int), atr);
+		handle_unsigned_int(res, va_arg(*ap, unsigned int), atr);
 	else if (*sp == 'x')
-		handle_lowhex(str, res, va_arg(*ap, unsigned int), atr);
+		handle_lowhex(res, va_arg(*ap, unsigned int), atr);
 	else if (*sp == 'X')
-		handle_uphex(str, res, va_arg(*ap, unsigned int), atr);
+		handle_uphex(res, va_arg(*ap, unsigned int), atr);
 	else if (*sp == 'p')
-		handle_pointer(str, res, va_arg(*ap, void *), atr);
+		handle_pointer(res, (unsigned long)va_arg(*ap, void *), atr);
 	else if (*sp == 'c')
-		handle_char(str, res, va_arg(*ap, int), atr);
+		handle_char(res, va_arg(*ap, int), atr);
 	else if (*sp == 's')
-		handle_string(str, res, va_arg(*ap, char *), atr);
-	return (sp - str);
+		handle_string(res, va_arg(*ap, char *), atr);
+	return (sp - str + 2);
 }
 
 int	handle_format(const char *str, char **res, va_list *ap)
@@ -143,7 +51,7 @@ int	handle_format(const char *str, char **res, va_list *ap)
 	if (valid_chars(str) < 0 || valid_order(str) < 0)
 		return (1);//go to the next char in the caller function
 	sp = first_specifier(str);
-	return (handle_specifiers(str, sp, res, ap));
+	return (handle_specifier(str, sp, res, ap));
 }
 
 int	char_sequence(unsigned int len, const char *str, char **res)
@@ -158,9 +66,9 @@ int	char_sequence(unsigned int len, const char *str, char **res)
 	if (!tmp)
 		return (-1);
 	i = 0;
-	while (*res[i])
+	while ((*res)[i])
 	{
-		tmp[i] = *res[i];
+		tmp[i] = (*res)[i];
 		i++;
 	}
 	j = 0;
@@ -181,19 +89,21 @@ int	string_builder(const char *format, char **res, va_list *ap)
 	int	covered;
 
 	i = 0;
-	covered = 0;
 	while (format[i])
 	{
+		covered = 0;
 		if (format[i] == '%')
-			covered = handle_format(&format[i], res, ap);
+			covered = handle_format(format + i + 1, res, ap);
 		else
 		{
-			while (format[i] && format[i] != '%')
+			while (format[i + covered] && format[i + covered] != '%')
 				covered++;
-			covered = char_sequence(covered, &format[i], res);
+			if (covered > 0)
+				covered = char_sequence(covered, format + i, res);
 		}
 		if (covered < 0)
 			return (-1);
+		//printf("%d -- %c -- %s\n", covered, format[i], *res);
 		i += covered;
 	}
 	return (i);

@@ -6,11 +6,18 @@
 /*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 00:11:14 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/08 13:12:57 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/11 15:34:26 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+long	ft_abs(int val)
+{
+	if (val < 0)
+		return (-(long)val);
+	return ((long)val);
+}
 
 static int	ft_isspace(char c)
 {
