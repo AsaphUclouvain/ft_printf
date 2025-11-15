@@ -6,7 +6,7 @@
 /*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 16:15:30 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 17:40:53 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 18:43:10 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	handle_specifier(const char *str, char *sp, char **res, va_list *ap)
 		handle_char(res, va_arg(*ap, int), atr);
 	else if (*sp == 's')
 		handle_string(res, va_arg(*ap, char *), atr);
+	free(atr);
 	return (sp - str + 2);
 }
 

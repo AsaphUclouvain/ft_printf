@@ -6,7 +6,7 @@
 /*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 23:26:12 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 17:25:10 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 18:43:37 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,4 @@ void	handle_string(char **res, char *new_str, t_attributes *atr)
 		add_str(s, res);
 	}
 	free(s);
-	free(atr);
 }

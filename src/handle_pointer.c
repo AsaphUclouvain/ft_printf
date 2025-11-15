@@ -6,7 +6,7 @@
 /*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:49:25 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 17:01:34 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 18:45:20 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,5 @@ void	handle_pointer(char **res, unsigned long ptr, t_attributes *atr)
 	if (!s)
 		return ;
 	add_str(s, res);
-	free(atr);
 	free(s);
 }
