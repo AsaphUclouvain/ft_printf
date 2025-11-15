@@ -6,7 +6,7 @@
 /*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 16:46:37 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 16:47:43 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:41:21 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*first_specifier(const char *str)
 {
 	int	i;
 
-	i  = 0;
+	i = 0;
 	while (str[i])
 	{
 		if (isspecifier(str[i]))

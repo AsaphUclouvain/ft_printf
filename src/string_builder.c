@@ -6,7 +6,7 @@
 /*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 16:15:30 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 17:26:51 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:40:53 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	handle_format(const char *str, char **res, va_list *ap)
 	if (!str || !res || !ap)
 		return (-1);
 	if (valid_chars(str) < 0 || valid_order(str) < 0)
-		return (1);//go to the next char in the caller function
+		return (1);
 	sp = first_specifier(str);
 	return (handle_specifier(str, sp, res, ap));
 }
