@@ -3,8 +3,8 @@ LIBFT = libft
 SRC_DIR = src/
 OBJ_DIR = obj/
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I
 INCLUDE = include
+CFLAGS = -Wall -Werror -Wextra -I$(INCLUDE)
 AR = ar rcs
 RM = rm -rf
 
@@ -15,19 +15,27 @@ SRC_FILES = attributes_extractor2 ft_printf handle_integer handle_unsigned_int \
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
+LIBFT_FILES =  ft_isalpha ft_isdigit ft_isalnum ft_isascii ft_isprint \
+		ft_strlen ft_memset ft_bzero ft_memcpy ft_memmove \
+		ft_strlcpy ft_strlcat ft_toupper ft_tolower ft_strchr \
+		ft_strrchr ft_strncmp ft_memchr ft_memcmp ft_strnstr \
+		ft_atoi ft_calloc ft_strdup ft_substr ft_strjoin \
+		ft_strtrim ft_split ft_itoa ft_strmapi ft_striteri \
+		ft_putchar_fd ft_putstr_fd ft_putendl_fd ft_putnbr_fd
+
+LIBFT_OBJ = $(addprefix $(LIBFT)/, $(addsuffix .o, $(LIBFT_FILES)))
 
 all : $(NAME)
 
-$(NAME) : $(OBJ)
+$(NAME) : $(OBJ) $(LIBFT_OBJ)
 	@make -C $(LIBFT)
-	@cp libft/libft.a .
 	@$(AR) $(NAME) $^
 
 $(OBJ_DIR) :
 	mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
 	$(RM) $(OBJ_DIR)
@@ -37,7 +45,6 @@ fclean : clean
 	$(RM) $(NAME)
 	@make fclean -C $(LIBFT)
 
-re : 
-	fclean all
+re : fclean all
 
 .PHONY : all clean fclean re
