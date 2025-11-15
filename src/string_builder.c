@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   string_builder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 16:15:30 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/14 03:12:38 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:26:51 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
 
 int	handle_specifier(const char *str, char *sp, char **res, va_list *ap)
 {
@@ -43,8 +44,6 @@ int	handle_specifier(const char *str, char *sp, char **res, va_list *ap)
 int	handle_format(const char *str, char **res, va_list *ap)
 {
 	char	*sp;
-	int	star_width;
-	int	star_precision;//sp, star_width and star_precision will be in a structure
 
 	if (!str || !res || !ap)
 		return (-1);
@@ -54,7 +53,7 @@ int	handle_format(const char *str, char **res, va_list *ap)
 	return (handle_specifier(str, sp, res, ap));
 }
 
-int	char_sequence(unsigned int len, const char *str, char **res)
+int	char_sequence(int len, const char *str, char **res)
 {
 	int		i;
 	int		j;
@@ -103,7 +102,6 @@ int	string_builder(const char *format, char **res, va_list *ap)
 		}
 		if (covered < 0)
 			return (-1);
-		//printf("%d -- %c -- %s\n", covered, format[i], *res);
 		i += covered;
 	}
 	return (i);

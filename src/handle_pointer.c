@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pointer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:49:25 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/14 05:35:41 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:01:34 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
 
-static char	*ft_nil()
+static char	*ft_nil(void)
 {
 	char	*nil;
-	int	len;
+	int		len;
 
 	len = 5;
 	nil = (char *)malloc(len + 1);

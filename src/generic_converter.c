@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   generic_converter.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:35:54 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/14 01:30:16 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:25:51 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
 
 static void	apply_precision(int precision, char **str)
 {
@@ -63,9 +64,10 @@ static void	add_prefix(const char *prefix, char **str)
 	*str = new_str;
 }
 
-void	generic_converter(int negative, char type, char **str_num, t_attributes *atr)
+void	generic_converter(int negative, char type, char **str_num, \
+	t_attributes *atr)
 {
-	if (atr->precision > ft_strlen(*str_num))
+	if (atr->precision > (int)ft_strlen(*str_num))
 		apply_precision(atr->precision, str_num);
 	if (atr->plus || negative)
 	{
@@ -83,8 +85,8 @@ void	generic_converter(int negative, char type, char **str_num, t_attributes *at
 		else
 			add_prefix("0x", str_num);
 	}
-	if (atr->zero_padding && atr->width > ft_strlen(*str_num))
+	if (atr->zero_padding && atr->width > (int)ft_strlen(*str_num))
 		apply_zero_padding(atr->width, str_num);
-	if (atr->width > ft_strlen(*str_num))
+	if (atr->width > (int)ft_strlen(*str_num))
 		apply_width(atr->left_align, atr->width, str_num);
 }

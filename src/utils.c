@@ -1,16 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils3.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 14:22:00 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/14 04:00:53 by anzongan         ###   ########.fr       */
+/*   Created: 2025/11/08 00:07:54 by anzongan          #+#    #+#             */
+/*   Updated: 2025/11/15 16:50:28 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
+
+int	ft_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+int	ft_min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+long	ft_abs(int val)
+{
+	if (val < 0)
+		return (-(long)val);
+	return ((long)val);
+}
 
 void	add_char(int rep, int c, char **res)
 {
@@ -62,33 +84,4 @@ void	add_str(char *new_str, char **res)
 	tmp[i + j] = '\0';
 	free(*res);
 	*res = tmp;
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	len;
-
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
-}
-
-void	ft_putstr(const char *s)
-{
-	write(1, s, ft_strlen(s));
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	size_t			i;
-	unsigned char	*s_cpy;
-
-	i = 0;
-	s_cpy = (unsigned char *)s;
-	while (i < n)
-	{
-		s_cpy[i] = '\0';
-		i++;
-	}
 }

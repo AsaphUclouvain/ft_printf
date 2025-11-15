@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   handle_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 23:26:12 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/14 05:00:27 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:25:10 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
 
 static char	*ft_null(int precision)
 {
@@ -33,7 +34,7 @@ static char	*apply_precision_str(int precision, char *new_str)
 	int		len;
 	char	*s;
 
-	if (new_str == NULL)//in this case we return the character (null)
+	if (new_str == NULL)
 		return (ft_null(precision));
 	if (precision < 0)
 	{
@@ -45,7 +46,7 @@ static char	*apply_precision_str(int precision, char *new_str)
 		s[len] = '\0';
 		return (s);
 	}
-	len = ft_min(ft_strlen(new_str), precision);
+	len = ft_min((int)ft_strlen(new_str), precision);
 	s = (char *)malloc(len + 1);
 	if (!s)
 		return (NULL);
@@ -60,13 +61,13 @@ void	handle_string(char **res, char *new_str, t_attributes *atr)
 	int		len;
 
 	attributes_annulation(0, 0, 's', atr);
-	if (!atr)
+	if (!atr || !res)
 		return ;
 	s = apply_precision_str(atr->precision, new_str);
 	if (!s)
 		return ;
 	len = ft_strlen(s);
-	if (atr->width <= len)
+	if (atr->width <= (int)len)
 		add_str(s, res);
 	else if (atr->left_align)
 	{

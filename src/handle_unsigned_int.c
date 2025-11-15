@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_integer.c                                   :+:      :+:    :+:   */
+/*   handle_unsigned_int.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 14:15:44 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/13 23:33:02 by anzongan         ###   ########.fr       */
+/*   Created: 2025/11/04 22:03:30 by anzongan          #+#    #+#             */
+/*   Updated: 2025/11/15 16:54:24 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	handle_integer(char **res, int value, t_attributes *atr)
+void	handle_unsigned_int(char **res, unsigned int value, t_attributes *atr)
 {
-	int				sgn;
-	char			*s;
-	unsigned long long	abs_value;
+	char	*s;
 
-	sgn = (value < 0);
-	attributes_annulation(sgn, value, 'd',  atr);
-	abs_value = ft_abs(value);
-	s = ft_itoa_base(abs_value, 10, "0123456789");
-	generic_converter(sgn, 'd', &s, atr);
+	attributes_annulation(0, value, 'u', atr);
+	s = ft_itoa_base(value, 10, "0123456789");
+	if (!s)
+		return ;
+	generic_converter(0, 'u', &s, atr);
 	add_str(s, res);
 	free(s);
 }

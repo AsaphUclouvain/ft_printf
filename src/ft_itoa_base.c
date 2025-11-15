@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   itoa_base.c                                        :+:      :+:    :+:   */
+/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 13:21:24 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/11 16:23:53 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:32:08 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
 
 static int	valid_base(const char *base)
 {
@@ -73,7 +74,7 @@ char	*ft_itoa_base(unsigned long long num, int base_len, const char *base)
 	int		len;
 	int		i;
 
-	if (!valid_base(base) || base_len != ft_strlen(base))
+	if (!valid_base(base) || base_len != (int)ft_strlen(base))
 		return (NULL);
 	len = num_len(num, base_len);
 	str_num = (char *)malloc(len + 1);

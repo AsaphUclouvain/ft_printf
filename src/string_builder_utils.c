@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string_builder_utils.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/15 16:46:37 by anzongan          #+#    #+#             */
+/*   Updated: 2025/11/15 16:47:43 by anzongan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
+#include "libft.h"
 
 int	isspecifier(char c)
 {
@@ -30,7 +43,7 @@ int	valid_order(const char *str)
 	either = i;
 	while (str[i] && ft_isdigit(str[i]))
 		i++;
-	if (str[i] == '*' &&  either == i)
+	if (str[i] == '*' && either == i)
 		i++;
 	if (str[i] == '.')
 	{
@@ -66,14 +79,14 @@ int	valid_chars(const char *str)
 
 t_width_precision	*wp_builder(const char *str, va_list *ap)
 {
-	int	i;
-	int	w;
-	int	p;
+	int					i;
+	int					w;
+	int					p;
 	t_width_precision	*wp;
 
 	i = 0;
 	w = 0;
-	p = -1;//pas de precision precisee
+	p = -1;
 	while (str[i] && ft_strchr("0#-+ ", str[i]))
 		i++;
 	if (str[i] == '*')

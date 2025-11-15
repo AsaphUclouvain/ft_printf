@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   attributes_extractor.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 23:40:20 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/11 15:02:05 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 16:59:46 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
 
 int	width(const char *str)
 {
@@ -65,4 +66,3 @@ int	precision(const char *str)
 	free(num);
 	return (val);
 }
-

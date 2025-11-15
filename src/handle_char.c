@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   handle_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 22:09:14 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/13 23:33:31 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:29:02 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	handle_char(char **res, int c, t_attributes* atr)
+void	handle_char(char **res, int c, t_attributes *atr)
 {
 	int		w;
-	char	*tmp;
 
 	w = 0;
 	attributes_annulation(0, c, 'c', atr);

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   width_and_padding.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:45:40 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/11 14:48:01 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:30:33 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
 
 void	apply_zero_padding(int width, char **str)
 {
@@ -64,13 +65,15 @@ static void	add_space_before(int width, char **str)
 {
 	int		i;
 	int		j;
+	int		len;
 	char	*new_str;
 
 	new_str = (char *)malloc(width + 1);
 	if (!new_str)
 		return ;
 	i = 0;
-	while (i < width - ft_strlen(*str))
+	len = ft_strlen(*str);
+	while (i < width - len)
 		new_str[i++] = ' ';
 	j = 0;
 	while ((*str)[j])
@@ -90,4 +93,3 @@ void	apply_width(int left_align, int width, char **str)
 	else
 		add_space_before(width, str);
 }
-

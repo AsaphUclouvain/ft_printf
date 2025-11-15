@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   attributes_extractor2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 14:59:04 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/11 15:01:22 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 16:59:29 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
 
 int	hashtag(const char *str)
 {
@@ -51,4 +52,3 @@ int	zero_padding(const char *str)
 		i++;
 	return (str[i] == '0');
 }
-
