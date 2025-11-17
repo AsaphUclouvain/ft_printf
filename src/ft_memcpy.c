@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_percent.c                                   :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 15:48:53 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 23:32:32 by anzongan         ###   ########.fr       */
+/*   Created: 2025/10/21 21:46:32 by anzongan          #+#    #+#             */
+/*   Updated: 2025/10/26 17:36:59 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-void	handle_percent(int *bytes_read)
+#include "libft.h"
+//doesn't protect src from segfault
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	*bytes_read += write(1, "%", 1);
+	size_t				i;
+	unsigned char		*d;
+	const unsigned char	*s;
+
+	i = 0;
+	d = (unsigned char *)dest;
+	s = (const unsigned char *)src;
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (dest);
 }

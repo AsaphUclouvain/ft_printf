@@ -6,7 +6,7 @@
 /*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 23:26:12 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 18:43:37 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/16 00:03:27 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,31 @@ static char	*apply_precision_str(int precision, char *new_str)
 	return (s);
 }
 
-void	handle_string(char **res, char *new_str, t_attributes *atr)
+void	handle_string(int *bytes_read,\
+	char *new_str, t_attributes *atr)
 {
 	char	*s;
 	int		len;
 
 	attributes_annulation(0, 0, 's', atr);
-	if (!atr || !res)
+	if (!atr)
 		return ;
 	s = apply_precision_str(atr->precision, new_str);
 	if (!s)
 		return ;
 	len = ft_strlen(s);
-	if (atr->width <= (int)len)
-		add_str(s, res);
+	if (atr->width <= len)
+		ft_putstr_fd(s, 1);
 	else if (atr->left_align)
 	{
-		add_str(s, res);
-		add_char(atr->width - len, 32, res);
+		ft_putstr_fd(s, 1);
+		write_spaces(atr->width - len);
 	}
 	else
 	{
-		add_char(atr->width - len, 32, res);
-		add_str(s, res);
+		write_spaces(atr->width - len);
+		ft_putstr_fd(s, 1);
 	}
+	*bytes_read += ft_max(len, atr->width);
 	free(s);
 }

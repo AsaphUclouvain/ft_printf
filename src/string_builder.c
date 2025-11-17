@@ -6,84 +6,70 @@
 /*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 16:15:30 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 18:43:10 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/16 00:05:56 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
 
-int	handle_specifier(const char *str, char *sp, char **res, va_list *ap)
+int	handle_specifier(const char *str, va_list *ap, t_segment *seg)
 {
 	t_attributes	*atr;
 
 	atr = set_attributes(str, wp_builder(str, ap));
 	if (!atr)
 		return (-1);
-	if (!sp)
-		return (1);
-	else if (*sp == '%')
-		handle_percent(res);
-	else if (*sp == 'i' || *sp == 'd')
-		handle_integer(res, va_arg(*ap, int), atr);
-	else if (*sp == 'u')
-		handle_unsigned_int(res, va_arg(*ap, unsigned int), atr);
-	else if (*sp == 'x')
-		handle_lowhex(res, va_arg(*ap, unsigned int), atr);
-	else if (*sp == 'X')
-		handle_uphex(res, va_arg(*ap, unsigned int), atr);
-	else if (*sp == 'p')
-		handle_pointer(res, (unsigned long)va_arg(*ap, void *), atr);
-	else if (*sp == 'c')
-		handle_char(res, va_arg(*ap, int), atr);
-	else if (*sp == 's')
-		handle_string(res, va_arg(*ap, char *), atr);
+	else if (*(seg->sp) == '%')
+		handle_percent(seg->b_rd);
+	else if (*(seg->sp) == 'i' || *(seg->sp) == 'd')
+		handle_integer(seg->b_rd, va_arg(*ap, int), atr);
+	else if (*(seg->sp) == 'u')
+		handle_unsigned_int(seg->b_rd, va_arg(*ap, unsigned int), atr);
+	else if (*(seg->sp) == 'x')
+		handle_lowhex(seg->b_rd, va_arg(*ap, unsigned int), atr);
+	else if (*(seg->sp) == 'X')
+		handle_uphex(seg->b_rd, va_arg(*ap, unsigned int), atr);
+	else if (*(seg->sp) == 'p')
+		handle_pointer(seg->b_rd, \
+(unsigned long long)va_arg(*ap, void *), atr);
+	else if (*(seg->sp) == 'c')
+		handle_char(seg->b_rd, va_arg(*ap, int), atr);
+	else if (*(seg->sp) == 's')
+		handle_string(seg->b_rd, va_arg(*ap, char *), atr);
 	free(atr);
-	return (sp - str + 2);
+	return (seg->sp - str + 2);
 }
 
-int	handle_format(const char *str, char **res, va_list *ap)
+int	handle_format(int *bytes_read, const char *str, va_list *ap)
 {
-	char	*sp;
+	t_segment	*seg;
+	int			char_count;
+	int			order;
 
-	if (!str || !res || !ap)
+	if (!str || !ap)
 		return (-1);
-	if (valid_chars(str) < 0 || valid_order(str) < 0)
+	order = valid_order(str);
+	if (order == -1)
+		return (-1);
+	if (order == -2)
+	{
+		*bytes_read += write(1, "%", 1);
 		return (1);
-	sp = first_specifier(str);
-	return (handle_specifier(str, sp, res, ap));
+	}
+	seg = (t_segment *)malloc(sizeof(t_segment));
+	if (!seg)
+		return (-1);
+	seg->b_rd = bytes_read;
+	seg->sp = first_specifier(str);
+	if (!seg->sp)
+		return (1);
+	char_count = handle_specifier(str, ap, seg);
+	free(seg);
+	return (char_count);
 }
 
-int	char_sequence(int len, const char *str, char **res)
-{
-	int		i;
-	int		j;
-	char	*tmp;
-
-	if (!res || !str)
-		return (-1);
-	tmp = (char *)malloc(ft_strlen(*res) + len + 1);
-	if (!tmp)
-		return (-1);
-	i = 0;
-	while ((*res)[i])
-	{
-		tmp[i] = (*res)[i];
-		i++;
-	}
-	j = 0;
-	while (j < len)
-	{
-		tmp[i + j] = str[j];
-		j++;
-	}
-	tmp[i + j] = '\0';
-	free(*res);
-	*res = tmp;
-	return (j);
-}
-
-int	string_builder(const char *format, char **res, va_list *ap)
+int	string_builder(int *bytes_read, const char *format, va_list *ap)
 {
 	int	i;
 	int	covered;
@@ -93,13 +79,12 @@ int	string_builder(const char *format, char **res, va_list *ap)
 	{
 		covered = 0;
 		if (format[i] == '%')
-			covered = handle_format(format + i + 1, res, ap);
+			covered = handle_format(bytes_read, format + i + 1, ap);
 		else
 		{
 			while (format[i + covered] && format[i + covered] != '%')
 				covered++;
-			if (covered > 0)
-				covered = char_sequence(covered, format + i, res);
+			*bytes_read += write(1, format + i, covered);
 		}
 		if (covered < 0)
 			return (-1);

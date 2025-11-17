@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_percent.c                                   :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anzongan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 15:48:53 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 23:32:32 by anzongan         ###   ########.fr       */
+/*   Created: 2025/10/22 15:41:09 by anzongan          #+#    #+#             */
+/*   Updated: 2025/10/26 17:38:56 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	handle_percent(int *bytes_read)
+char	*ft_strchr(const char *s, int c)
 {
-	*bytes_read += write(1, "%", 1);
+	while (1)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		if (*s == '\0')
+			break ;
+		s++;
+	}
+	return (NULL);
 }

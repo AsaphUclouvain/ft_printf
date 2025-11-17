@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_percent.c                                   :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 15:48:53 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 23:32:32 by anzongan         ###   ########.fr       */
+/*   Created: 2025/10/21 13:52:13 by anzongan          #+#    #+#             */
+/*   Updated: 2025/10/26 15:01:20 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	handle_percent(int *bytes_read)
+void	ft_bzero(void *s, size_t n)
 {
-	*bytes_read += write(1, "%", 1);
+	size_t			i;
+	unsigned char	*s_cpy;
+
+	i = 0;
+	s_cpy = (unsigned char *)s;
+	while (i < n)
+	{
+		s_cpy[i] = '\0';
+		i++;
+	}
 }

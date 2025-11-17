@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_percent.c                                   :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 15:48:53 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 23:32:32 by anzongan         ###   ########.fr       */
+/*   Created: 2025/10/26 02:57:14 by anzongan          #+#    #+#             */
+/*   Updated: 2025/10/26 02:00:41 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	handle_percent(int *bytes_read)
+void	ft_putstr_fd(char *s, int fd)
 {
-	*bytes_read += write(1, "%", 1);
+	write(fd, s, ft_strlen(s));
 }

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_percent.c                                   :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anzongan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 15:48:53 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 23:32:32 by anzongan         ###   ########.fr       */
+/*   Created: 2025/10/20 09:26:51 by anzongan          #+#    #+#             */
+/*   Updated: 2025/10/20 09:30:40 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	handle_percent(int *bytes_read)
+int	ft_isdigit(int c)
 {
-	*bytes_read += write(1, "%", 1);
+	return (c >= 48 && c <= 57);
 }

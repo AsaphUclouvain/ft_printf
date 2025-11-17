@@ -6,13 +6,15 @@
 /*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 16:10:55 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 18:45:08 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/15 23:54:21 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
 
-void	handle_lowhex(char **res, unsigned int value, t_attributes *atr)
+void	handle_lowhex(int *bytes_read,\
+	unsigned int value, t_attributes *atr)
 {
 	char	*s;
 
@@ -21,11 +23,13 @@ void	handle_lowhex(char **res, unsigned int value, t_attributes *atr)
 	if (!s)
 		return ;
 	generic_converter(0, 'x', &s, atr);
-	add_str(s, res);
+	ft_putstr_fd(s, 1);
+	*bytes_read += ft_strlen(s);
 	free(s);
 }
 
-void	handle_uphex(char **res, unsigned int value, t_attributes *atr)
+void	handle_uphex(int *bytes_read,\
+	unsigned int value, t_attributes *atr)
 {
 	char	*s;
 
@@ -34,6 +38,7 @@ void	handle_uphex(char **res, unsigned int value, t_attributes *atr)
 	if (!s)
 		return ;
 	generic_converter(0, 'X', &s, atr);
-	add_str(s, res);
+	ft_putstr_fd(s, 1);
+	*bytes_read += ft_strlen(s);
 	free(s);
 }

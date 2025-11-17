@@ -34,54 +34,11 @@ long	ft_abs(int val)
 	return ((long)val);
 }
 
-void	add_char(int rep, int c, char **res)
+void	write_spaces(int width)
 {
-	int		i;
-	int		j;
-	char	*tmp;
-
-	tmp = (char *)malloc(ft_strlen(*res) + rep + 1);
-	if (!tmp)
-		return ;
-	i = 0;
-	while ((*res)[i])
+	while (width > 0)
 	{
-		tmp[i] = (*res)[i];
-		i++;
+		write(1, " ", 1);
+		width--;
 	}
-	j = 0;
-	while (j < rep)
-	{
-		tmp[i + j] = c;
-		j++;
-	}
-	tmp[i + j] = '\0';
-	free(*res);
-	*res = tmp;
-}
-
-void	add_str(char *new_str, char **res)
-{
-	int		i;
-	int		j;
-	char	*tmp;
-
-	tmp = (char *)malloc(ft_strlen(*res) + ft_strlen(new_str) + 1);
-	if (!tmp)
-		return ;
-	i = 0;
-	while ((*res)[i])
-	{
-		tmp[i] = (*res)[i];
-		i++;
-	}
-	j = 0;
-	while (new_str[j])
-	{
-		tmp[i + j] = new_str[j];
-		j++;
-	}
-	tmp[i + j] = '\0';
-	free(*res);
-	*res = tmp;
 }

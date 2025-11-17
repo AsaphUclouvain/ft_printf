@@ -1,5 +1,5 @@
 NAME = libftprintf.a
-LIBFT = libft
+LIBFT = libft/
 SRC_DIR = src/
 OBJ_DIR = obj/
 CC = cc
@@ -23,18 +23,21 @@ LIBFT_FILES =  ft_isalpha ft_isdigit ft_isalnum ft_isascii ft_isprint \
 	ft_strtrim ft_split ft_itoa ft_strmapi ft_striteri \
 	ft_putchar_fd ft_putstr_fd ft_putendl_fd ft_putnbr_fd
 
-LIBFT_OBJ = $(addprefix $(LIBFT)/, $(addsuffix .o, $(LIBFT_FILES)))
+LIBFT_OBJ = $(addprefix $(LIBFT), $(addsuffix .o, $(LIBFT_FILES)))
+HEADER = $(INCLUDE)/ft_printf.h $(INCLUDE)/libft.h
 
 all : $(NAME)
 
-$(NAME) : $(OBJ) $(LIBFT_OBJ)
+bonus : all
+
+$(NAME) : $(OBJ)
 	@make -C $(LIBFT)
-	@$(AR) $(NAME) $^
+	@$(AR) $(NAME) $(OBJ) $(LIBFT_OBJ)
 
 $(OBJ_DIR) :
 	mkdir -p $(OBJ_DIR)
 
-$(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJ_DIR)
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
@@ -43,9 +46,8 @@ clean :
 
 fclean : clean
 	$(RM) $(NAME)
-	$(RM) libft.a
 	@make fclean -C $(LIBFT)
 
 re : fclean all
 
-.PHONY : all clean fclean re
+.PHONY : all clean fclean re bonus

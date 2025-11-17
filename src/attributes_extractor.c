@@ -52,9 +52,11 @@ int	precision(const char *str)
 	char	*num;
 
 	i = 0;
-	while (str[i] && ft_strchr("0#+- 123456789", str[i]))
+	while (str[i] && ft_strchr("0#+- *123456789", str[i]))
 		i++;
 	if (str[i++] != '.')
+		return (-1);
+	if (str[i] == '*')
 		return (-1);
 	len = 0;
 	while (str[i + len] && ft_isdigit(str[i + len]))

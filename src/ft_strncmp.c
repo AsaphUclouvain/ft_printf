@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_percent.c                                   :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anzongan <anzongan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 15:48:53 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 23:32:32 by anzongan         ###   ########.fr       */
+/*   Created: 2025/10/23 22:59:55 by anzongan          #+#    #+#             */
+/*   Updated: 2025/10/23 23:44:10 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	handle_percent(int *bytes_read)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	*bytes_read += write(1, "%", 1);
+	size_t				i;
+	const unsigned char	*s1_cpy;
+	const unsigned char	*s2_cpy;
+
+	s1_cpy = (const unsigned char *)s1;
+	s2_cpy = (const unsigned char *)s2;
+	i = 0;
+	while (i < n && *s1_cpy && *s2_cpy && *s1_cpy == *s2_cpy)
+	{
+		s1_cpy++;
+		s2_cpy++;
+		i++;
+	}
+	if (i == n)
+		return (0);
+	return (*s1_cpy - *s2_cpy);
 }

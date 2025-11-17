@@ -57,23 +57,7 @@ int	valid_order(const char *str)
 	if (!str[i])
 		return (-1);
 	if (!isspecifier(str[i]))
-		return (-1);
-	return (i);
-}
-
-int	valid_chars(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && !isspecifier(str[i]))
-	{
-		if (!ft_strchr("0123456789# -+.*", str[i]))
-			return (-1);
-		i++;
-	}
-	if (!str[i])
-		return (-1);
+		return (-2);
 	return (i);
 }
 

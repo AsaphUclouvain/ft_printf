@@ -6,7 +6,7 @@
 /*   By: anzongan <anzongan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 14:57:03 by anzongan          #+#    #+#             */
-/*   Updated: 2025/11/15 17:16:47 by anzongan         ###   ########.fr       */
+/*   Updated: 2025/11/17 06:49:10 by anzongan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,13 @@ int	ft_printf(const char *format, ...)
 {
 	va_list		ap;
 	int			bytes_read;
-	char		*result;
+	int			exit_status;
 
-	result = ft_calloc(1, 1);
+	bytes_read = 0;
 	va_start(ap, format);
-	bytes_read = string_builder(format, &result, &ap);
+	exit_status = string_builder(&bytes_read, format, &ap);
 	va_end(ap);
-	if (bytes_read < 0)
-	{
-		free(result);
+	if (exit_status < 0)
 		return (-1);
-	}
-	ft_putstr_fd(result, 1);
-	bytes_read = ft_strlen(result);
-	free(result);
 	return (bytes_read);
 }
